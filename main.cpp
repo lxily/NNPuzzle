@@ -7,7 +7,7 @@ int main() {
 	puzzle.shuffle(shufferLength);
 	//nd.printShuffleList();
 	printf("初始局面:\n");
-	//puzzle.printBoard();
+	puzzle.printBoard();
 	/*
 	//原始的dfs暴力搜索
 	puzzle.dfs(drs,0);
@@ -24,7 +24,7 @@ int main() {
 	//修改NNPuzzle.h line75、76中的省缺参数
 	NNPuzzleSolver solver(puzzle.board);
 	string solution = solver.solve(solver.size);
-	//printf("\n求解局面:\n"); solver.printBoard();
-	printf("Total Steps: %zd\n", solution.size());
+	printf("\n求解局面:\n"); solver.printBoard();
+	printf("\nTotal Steps: %zd\n", solution.size());
 	return 0;
 }

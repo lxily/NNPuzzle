@@ -14,11 +14,11 @@ using namespace std;
 #define db1(x) cerr<<#x<<" = "<<x<<endl
 #define db2(x,y) cerr<<#x<<" = "<<x<<" "<<#y<<" = "<<y<<endl;
 #define db3(x,y,z) cerr<<#x<<" = "<<x<<" "<<#y<<" = "<<y<<" "<<#z<<" = "<<z<<endl;
-const int boardSize = 100;   //棋盘大小
+const int boardSize = 10;   //棋盘大小
 const int alpha = 0;  //距离误差
 const int beta = 1;   //位置误差
 const int maxDeep = 5;    //搜索最大深度
-const int shufferLength = 3000000; //打乱次数
+const int shufferLength = 300000; //打乱次数
 const string dirString = "UDLR";
 const int dir[4][2] = { -1,0,1,0,0,-1,0,1 };
 
