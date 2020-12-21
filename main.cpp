@@ -1,7 +1,11 @@
 #include "NNPuzzle.h"
 
 int main() {
-	srand(time(0));
+#ifdef LOCAL
+	clock_t start = clock();
+#endif //LOCAL
+
+	srand((unsigned)time(0));
 	vector<int>drs;
 	NDigit puzzle(boardSize, alpha, beta);
 	puzzle.shuffle(shufferLength);
@@ -26,5 +30,14 @@ int main() {
 	string solution = solver.solve(solver.size);
 	printf("\n求解局面:\n"); solver.printBoard();
 	printf("\nTotal Steps: %zd\n", solution.size());
+
+#ifdef LOCAL
+	printf("\n\n");
+	clock_t end = clock();
+	double endtime = (double)(end - start) / CLOCKS_PER_SEC;
+	cout << "Total time:" << endtime << "s" << endl;        //s为单位
+	cout << "Total time:" << endtime * 1000 << "ms" << endl;    //ms为单位
+#endif //LOCAL
+
 	return 0;
 }
