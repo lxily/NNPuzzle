@@ -129,7 +129,7 @@ void NDigit::dfs(vector<int>& drs, int dep) {
 void NDigit::printBoard() {
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			printf("%2d ", board[i][j]);
+			printf("%3d ", board[i][j]);
 		}
 		printf("\n");
 	}
@@ -139,7 +139,7 @@ void NDigit::printBestBoard() {
 	printf("BestBoard:\n");
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			printf("%2d ", bestBoard[i][j]);
+			printf("%3d ", bestBoard[i][j]);
 		}
 		printf("\n");
 	}
@@ -201,6 +201,7 @@ NNPuzzleSolver::NNPuzzleSolver(vector<vector<int>> _board, vector<vector<int>> _
 	mp['U'] = 0; mp['D'] = 1; mp['L'] = 2; mp['R'] = 3;
 }
 
+/*
 string NNPuzzleSolver::getRoadBetweenPoints(int N, int sx, int sy, int tx, int ty) {
 	vector<vector<bool>>vis = placed;
 	queue<piis>Q; Q.push(mkp(mkp(sx, sy), ""));
@@ -225,6 +226,35 @@ string NNPuzzleSolver::getRoadBetweenPoints(int N, int sx, int sy, int tx, int t
 	}
 	return "No Road found!!!";
 }
+*/
+string NNPuzzleSolver::getRoadBetweenPoints(int N, int sx, int sy, int tx, int ty) {
+	vector<vector<bool>>vis = placed;
+	priority_queue<pair<int, piis>>Q;
+	int dist = -abs(sx - tx) - abs(sy - ty);
+	Q.push(mkp(dist, mkp(mkp(sx, sy), "")));
+	vis[sx][sy] = true;
+	while (!Q.empty()) {
+		pair<int, piis> out = Q.top(); Q.pop();
+		int x = out.se.fi.fi;
+		int y = out.se.fi.se;
+		if (x == tx && y == ty)
+			return out.se.se;
+		for (int i = 0; i < 4; ++i) {
+			int ix = x + dir[i][0];
+			int iy = y + dir[i][1];
+			int idist = -abs(ix - tx) - abs(iy - ty);
+			if (ix >= 0 && ix < N&&iy >= 0 && iy < N && !vis[ix][iy]) {
+				vis[ix][iy] = true;
+				string road = out.se.se;
+				road.push_back(dirString[i]);
+				Q.push(mkp(idist, mkp(mkp(ix, iy), road)));
+				if (ix == tx && iy == ty)return road;
+			}
+		}
+	}
+	return "No Road found!!!";
+}
+
 
 bool NNPuzzleSolver::moveOne(int x, int y, char c, bool obs) {
 	int nx = x + dir[mp[c]][0];
@@ -235,7 +265,7 @@ bool NNPuzzleSolver::moveOne(int x, int y, char c, bool obs) {
 		cls();
 		printf("初始局面：\n"); printInitial();
 		printf("当前局面：\n"); printBoard();
-		Sleep(250);
+		Sleep(100);
 	}
 	
 	return true;
@@ -394,7 +424,7 @@ string NNPuzzleSolver::solve(int N) {
 void NNPuzzleSolver::printBoard() {
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			printf("%2d ", board[i][j]);
+			printf("%3d ", board[i][j]);
 		}
 		printf("\n");
 	}
@@ -412,7 +442,7 @@ void NNPuzzleSolver::printPlaced() {
 void NNPuzzleSolver::printInitial(){
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			printf("%2d ", initial[i][j]);
+			printf("%3d ", initial[i][j]);
 		}
 		printf("\n");
 	}
@@ -422,7 +452,7 @@ void NNPuzzleSolver::printPosition(){
 		for (int i = 0; i < size; ++i) {
 			for (int j = 0; j < size; ++j) {
 				int val = i * size + j;
-				printf("(%2d, %2d) ", position[val].fi, position[val].se);
+				printf("(%3d, %3d) ", position[val].fi, position[val].se);
 			}
 			printf("\n");
 		}
